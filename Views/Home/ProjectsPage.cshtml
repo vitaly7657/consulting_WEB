@@ -1,0 +1,53 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_ProjectsLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    @Model.siteText.MainPage_ProjectsLinkText
+</div>
+
+<div>
+    <h4>
+        @Model.siteText.MainPage_ProjectsLinkText
+    </h4>
+</div>
+
+@foreach (Project project in Model.projectsList)
+{
+    <div class="project-single">
+
+        <div style="">
+            <a method="get" asp-controller="Home" asp-action="ProjectDetailPage" asp-route-id="@project.Id"><img class="project-img" title="@project.ProjectTitle" height="100" src="@project.PicturePath" /></a>
+
+        </div>
+
+        <div class="project-title">
+            <a class="project-a" method="get" asp-controller="Home" asp-action="ProjectDetailPage" asp-route-id="@project.Id">@project.ProjectTitle</a>
+
+        </div>
+
+        @if (User.Identity.Name == "admin")
+        {
+            <div class="project-title">
+                <form method="get" asp-controller="Home" asp-action="EditProjectPage" asp-route-id="@project.Id">
+                    <input style="margin-bottom:10px" type="submit" value="Изменить" class="btn btn-sm btn-primary" />
+                </form>
+                <form method="post" asp-controller="Home" asp-action="DeleteProject" asp-route-id="@project.Id">
+                    <input style="margin-bottom:10px" type="submit" value="Удалить" class="btn btn-sm btn-danger" />
+                </form>
+            </div>    
+        }
+    </div>        
+}
+
+<p></p>
+@if (User.Identity.Name == "admin")
+{
+    <form method="post" asp-controller="Home" asp-action="AddProjectPage">
+        <input type="submit" value="Добавить" class="btn btn-primary" />
+    </form>    
+}

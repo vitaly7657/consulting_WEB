@@ -1,0 +1,63 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_ProjectsLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    @Model.siteText.MainPage_BlogLinkText
+</div>
+
+<div>
+    <h4>
+        @Model.siteText.MainPage_BlogLinkText
+    </h4>
+</div>
+
+@foreach (Blog blog in Model.blogList)
+{   
+	<div class="blog-div-1">
+
+		<div class="blog-div-2">
+			@blog.PublishTime
+		</div>
+
+		<div class="blog-div-3">
+			<a method="get" asp-controller="Home" asp-action="BlogDetailPage" asp-route-id="@blog.Id">
+			<img class="blog-img" title="@blog.BlogTitle" height="100" src="@blog.PicturePath" />
+			</a>
+		</div>
+
+        <div class="blog-div-4">
+				<a method="get" asp-controller="Home" asp-action="BlogDetailPage" asp-route-id="@blog.Id">@blog.BlogTitle</a>
+			</div>
+
+        <div class="blog-div-5">
+				@blog.BlogDescription
+			</div>
+
+		@if (User.Identity.Name == "admin")
+		{
+			<div class="blog-div-6">
+				<form method="get" asp-controller="Home" asp-action="EditBlogPage" asp-route-id="@blog.Id">
+					<input type="submit" value="Изменить" class="btn btn-sm btn-primary" />
+				</form>
+
+				<form method="post" asp-controller="Home" asp-action="DeleteBlog" asp-route-id="@blog.Id">
+					<input type="submit" value="Удалить" class="btn btn-sm btn-danger" />
+				</form>
+			</div>	
+		}
+		
+	</div>
+}
+<br />
+
+@if (User.Identity.Name == "admin")
+{
+	<form method="post" asp-controller="Home" asp-action="AddBlogPage">
+		<input type="submit" value="Добавить" class="btn btn-primary" />
+	</form>	
+}

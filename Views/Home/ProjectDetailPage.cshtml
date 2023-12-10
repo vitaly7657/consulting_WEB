@@ -1,0 +1,35 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.project.ProjectTitle;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    <a method="get" asp-controller="Home" asp-action="Projectspage">@Model.siteText.MainPage_ProjectsLinkText</a>
+    ->
+    @Model.project.ProjectTitle
+</div>
+
+<div>
+    <h4>
+        @Model.project.ProjectTitle        
+    </h4>    
+</div>
+
+<table class="project-detail-table">
+    <tr>
+        <td>
+            <div class="project-details">@Model.project.ProjectDescription</div>
+        </td>
+        <td class="project-detail-td-2">
+            <img class="project-detail-img" src="@Model.project.PicturePath" />
+        </td>
+    </tr>
+</table>
+<br />
+
+<form method="post" asp-controller="Home" asp-action="ProjectsPage">
+    <input type="submit" value="< Назад" class="btn btn-primary" />
+</form>

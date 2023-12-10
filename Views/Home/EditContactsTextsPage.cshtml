@@ -1,0 +1,39 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_ContactsLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    Редактирование контактов
+</div>
+
+<div>
+    <h4 style="border-bottom-width:3px; border-bottom-style: solid">
+        @Model.siteText.MainPage_ContactsLinkText
+    </h4>
+</div>
+
+<div class="contacts-text-edit-div">   
+    <form asp-action="EditContactsTextsPageConfirm" asp-controller="Home">
+        <table>
+            <tr><td><div>Адрес:</div></td><td><input required type="text" style="width:500px" asp-for="siteText.ContactsPage_Address" value="@Model.siteText.ContactsPage_Address" /></td></tr>
+            <tr><td><div>Телефон:</div></td><td><input required type="text" style="width:500px" asp-for="siteText.ContactsPage_ContactsPhone" value="@Model.siteText.ContactsPage_ContactsPhone" /></td></tr>
+            <tr><td><div>Факс:</div></td><td><input required type="text" style="width:500px" asp-for="siteText.ContactsPage_ContactsFax" value="@Model.siteText.ContactsPage_ContactsFax" /></td></tr>
+            <tr><td><div>E-mail:</div></td><td><input required type="text" style="width:500px" asp-for="siteText.ContactsPage_ContactsEmail" value="@Model.siteText.ContactsPage_ContactsEmail" /></td></tr>
+            <tr><td><div>ФИО:</div></td><td><input required type="text" style="width:500px" asp-for="siteText.ContactsPage_ContactsFIO" value="@Model.siteText.ContactsPage_ContactsFIO" /></td></tr>
+        </table>
+        <div class="form-group">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+<p></p>
+
+<form asp-action="ContactsPage" asp-controller="Home">
+    <input type="submit" value="Отменить" class="btn btn-primary" />
+</form>
+
+

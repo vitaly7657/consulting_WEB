@@ -1,0 +1,61 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_ContactsLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    @Model.siteText.MainPage_ContactsLinkText
+</div>
+
+<div>
+    <h4>
+        @Model.siteText.MainPage_ContactsLinkText
+    </h4>
+</div>
+
+<table style="width: 100%;">
+    <tr>
+        <td style="
+		text-align: center;
+		">
+            <p>Адрес: @Model.siteText.ContactsPage_Address</p>
+            <p>Телефон: @Model.siteText.ContactsPage_ContactsPhone</p>
+            <p>Факс: @Model.siteText.ContactsPage_ContactsFax</p>
+            <p>E-mail: @Model.siteText.ContactsPage_ContactsEmail</p>
+            <p>ФИО: @Model.siteText.ContactsPage_ContactsFIO</p>
+        </td>
+        <td rowspan="2">
+            <div style="margin:auto;">
+                <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A7b273dce2708122001478b6387f8c2670f056204432e6f0f6befb365fa7a6c8d&amp;height=300&amp;lang=ru_RU&amp;scroll=true"></script>
+            </div>
+        </td>
+    </tr>
+    <tr style="text-align: center;">
+        <td>
+            @foreach (Contact contact in Model.contactsList)
+            {            
+                <a title="@contact.ContactText" href="@contact.ContactLink">
+                    <img class="contact-img" src="@contact.PicturePath">
+                </a>            
+            }
+        </td>
+    </tr>
+</table>
+<br />
+
+@if (User.Identity.Name == "admin")
+{
+    <form method="post" asp-controller="Home" asp-action="EditContactsTextsPage">
+        <input style="margin-right:20px" type="submit" value="Редактировать тексты" class="btn btn-primary" />
+    </form>
+
+    <form method="post" asp-controller="Home" asp-action="EditContactsLinksPage">
+        <input type="submit" value="Редактировать ссылки" class="btn btn-primary" />
+    </form>    
+}
+
+
+

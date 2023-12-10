@@ -1,0 +1,37 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = Model.siteText.MainPage_ProjectsLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    <a method="get" asp-controller="Home" asp-action="ServicesPage">@Model.siteText.MainPage_BlogLinkText</a>
+    ->
+    Добавление
+</div>
+
+<form asp-action="AddProject" asp-controller="Home" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="projectViewModel.ProjectTitle" class="control-label">Заголовок</label>
+        <input required type="text" asp-for="projectViewModel.ProjectTitle" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="projectViewModel.ProjectDescription" class="control-label">Описание</label>        
+        <textarea required type="text" asp-for="projectViewModel.ProjectDescription" class="form-control"></textarea>
+    </div>
+    <div>
+        <label asp-for="projectViewModel.PictureFile" class="control-label">Изображение</label>
+        <input required type="file" asp-for="projectViewModel.PictureFile" class="form-control" id="aaa" />
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Отправить" class="btn btn-primary" />
+    </div>
+</form>
+<br />
+
+<form asp-action="ProjectsPage" asp-controller="Home">
+    <input type="submit" value="Отменить" class="btn btn-danger" />
+</form>

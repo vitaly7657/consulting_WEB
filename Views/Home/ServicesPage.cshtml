@@ -1,0 +1,48 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_ServicesLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    @Model.siteText.MainPage_ServicesLinkText
+</div>
+
+<div>
+    <h4>
+        @Model.siteText.MainPage_ServicesLinkText
+    </h4>
+</div>
+
+
+@foreach(Service service in Model.servicesList)
+{
+    <details class="service-details">
+        <summary class="service-summary">
+        @service.ServiceTitle
+            @if (User.Identity.Name == "admin")
+            {
+                <div class="service-div-1">
+                    <form method="get" asp-controller="Home" asp-action="EditServicePage" asp-route-id="@service.Id">
+                        <input type="submit" value="Изменить" class="btn btn-sm btn-primary" />
+                    </form>
+                    <form method="post" asp-controller="Home" asp-action="DeleteService" asp-route-id="@service.Id">
+                        <input type="submit" value="Удалить" class="btn btn-sm btn-danger" />
+                    </form>
+                </div>    
+            }
+            
+        </summary>
+        <div class="service-description">@service.ServiceDescription</div>
+    </details>
+}
+<br />
+
+@if (User.Identity.Name == "admin")
+{
+    <form method="post" asp-controller="Home" asp-action="AddServicePage">
+        <input type="submit" value="Добавить" class="btn btn-primary" />
+    </form>    
+}

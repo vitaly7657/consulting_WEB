@@ -1,0 +1,41 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.blog.BlogTitle;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    <a method="get" asp-controller="Home" asp-action="BlogPage">@Model.siteText.MainPage_BlogLinkText</a>
+    ->
+    @Model.blog.BlogTitle
+</div>
+
+<div>
+    <h4>
+        @Model.blog.BlogTitle
+    </h4>
+</div>
+
+<table class="blog-detail-table">
+	<tr>
+		<td style="padding-bottom: 10px;" colspan="2">
+			@Model.blog.PublishTime
+		</td>
+	</tr>
+	<tr>
+		<td class="blog-detail-td-1">
+			<img class="blog-detail-img"
+			src="@Model.blog.PicturePath" />
+		</td>
+		<td class="blog-detail-td-2">
+			<div class="blog-detail-div-1">@Model.blog.BlogDescription</div>
+		</td>
+	</tr>
+</table>
+<br />
+
+<form method="post" asp-controller="Home" asp-action="BlogPage">
+	<input type="submit" value="< Назад" class="btn btn-primary" />
+</form>

@@ -1,0 +1,16 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_RequestLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    @Model.siteText.MainPage_RequestLinkText
+</div>
+
+<h4>
+    @Model.siteText.MainPage_RequestAcceptText
+</h4>
+<h5><a class="navbar-brand" asp-controller="Home" asp-action="MainPage">Вернуться на главную</a></h5>

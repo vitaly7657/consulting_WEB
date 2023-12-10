@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+@model m21_e2_WEB.Models.MainClass
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/m21_e2_WEB.styles.css" asp-append-version="true" />
+</head>
+<body>    
+    <header>
+        <div class="container" style="background-color:darkcyan; background-clip: content-box;">
+            @if (ViewContext.RouteData.Values["action"].ToString() != "EditMainPage")
+            {
+                <table style="margin:auto">
+                    <tr style="">
+                        <td rowspan="4">
+                            <a href="@Url.Action("MainPage", "Home")"><img style="width: 500px; height: 250px; object-fit: cover;"
+                                 src="//localhost:44380/api/application/getpixbyname/main_page_1.png" /></a>                            
+                        </td>
+                        <td>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <div style=" display: flex; justify-content: flex-end; margin-top:10px">
+                                    <form method="get" asp-controller="Home" asp-action="Login">
+                                        <input style="margin: 0 10px 0 0" type="submit" value="Вход" class="btn btn-sm btn-primary" />
+                                    </form>
+                                    <form method="get" asp-controller="Home" asp-action="Register">
+                                        <input style="margin: 0 0 0 0" type="submit" value="Регистрация" class="btn btn-sm btn-primary" />
+                                    </form>
+                                </div>
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div style="display: flex;justify-content: flex-end; margin-top:10px" >
+                                    <div style="text-align:right; margin-right:10px; font-weight:bold">Текущий пользователь: @User.Identity.Name</div>
+                                    <div style="">
+                                        <form method="post" asp-controller="Home" asp-action="Logout">
+                                            <input style="margin: 0 0 0 0" type="submit" value="Выход" class="btn btn-sm btn-primary" />
+                                        </form>
+                                    </div>
+                            </div>                                
+                            }                            
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <td class="layout-links">
+                            @if (User.Identity.Name == "admin")
+                            {
+                                <a asp-controller="Home" asp-action="WorkPage">Рабочий стол</a>
+                            }                            
+                            <a asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+                            <a asp-controller="Home" asp-action="ServicesPage">@Model.siteText.MainPage_ServicesLinkText</a>
+                            <a asp-controller="Home" asp-action="ProjectsPage">@Model.siteText.MainPage_ProjectsLinkText</a>
+                            <a asp-controller="Home" asp-action="BlogPage">@Model.siteText.MainPage_BlogLinkText</a>
+                            <a asp-controller="Home" asp-action="ContactsPage">@Model.siteText.MainPage_ContactsLinkText</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top:10px;text-align:center;">                        
+                            <form method="post" asp-controller="Home" asp-action="MainPage">
+                                <input style="width:300px; height:auto; font-size:28px; font-weight:bold" type="submit" value="@Model.siteText.MainPage_RequestButtonText" class="btn btn-danger" />
+                            </form>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:10px; padding-right:10px; font-size:38px; font-style:italic; text-align:right;">
+                            @Model.tagLine.TagLineText
+                        </td>
+                    </tr>
+                </table>       
+            }
+        </div>               
+        
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            Специально для SkillProfi, 2023 год
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

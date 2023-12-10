@@ -1,0 +1,27 @@
+﻿@model m21_e2_WEB.Models.MainClass
+@{
+    ViewData["Title"] = "Вход в приложение";
+}
+
+<h2>Вход в приложение</h2>
+<div>
+    <form method="post" asp-controller="Home" asp-action="Login">
+
+        <div style="margin:10px">
+            <label asp-for="loginViewModel.UserName"></label><br />
+            <input required asp-for="loginViewModel.UserName" />
+
+        </div>
+        <div style="margin:10px">
+            <label asp-for="loginViewModel.Password"></label><br />
+            <input required asp-for="loginViewModel.Password" />
+
+        </div>
+        <div style="margin:10px">
+            <input type="submit" value="Войти" />
+        </div>
+    </form>
+</div>
+<div style="margin:10px">
+    <input type="submit" onclick="history.go(-1);" value="< Назад" class="btn btn-primary" />
+</div>

@@ -1,0 +1,70 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_ContactsLinkText;
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    <a method="get" asp-controller="Home" asp-action="ContactsPage">@Model.siteText.MainPage_ContactsLinkText</a>
+    ->
+    Редактирование и добавление
+</div>
+
+<h4>Добавить</h4>
+
+<form asp-action="AddContact" asp-controller="Home" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="@Model.contact.ContactText" class="control-label">Описание</label>
+        <input required type="text" asp-for="@Model.contact.ContactText" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.contact.ContactLink" class="control-label">Ссылка</label>
+        <input required type="text" asp-for="@Model.contact.ContactLink" class="form-control" />
+    </div>
+    <div style="margin-bottom:5px;">
+        <label asp-for="contactViewModel.PictureFile" class="control-label">Изображение</label>
+        <input required type="file" asp-for="contactViewModel.PictureFile" class="form-control" />
+    </div>
+    <div style="margin-bottom:5px" class="form-group">
+        <input type="submit" value="Добавить" class="btn btn-primary" />
+    </div>
+</form>
+
+<h4>Редактировать</h4>
+
+@foreach (Contact con in Model.contactsList)
+{
+    <form asp-action="EditContactsLinksPageConfirm" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <div class="form-group collapse" >
+            <label asp-for="contact.Id" class="control-label" >Id</label>
+            <input type="text" asp-for="contact.Id" value="@con.Id" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="contact.ContactText" class="control-label">Описание</label>
+            <input required type="text" asp-for="contact.ContactText" value="@con.ContactText" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="contact.ContactLink" class="control-label">Ссылка</label>
+            <input required type="text" asp-for="contact.ContactLink" value="@con.ContactLink" class="form-control" />
+        </div>
+        <div style="margin-bottom:5px">
+            <label asp-for="contactViewModel.PictureFile" class="control-label">Изображение</label>
+            <img class="contact-img" title="@con.ContactText" width="100px" src="@con.PicturePath">
+            <input type="file" asp-for="contactViewModel.PictureFile" class="form-control" />
+        </div>
+        <div style="margin-bottom:5px">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+        </div>         
+    </form>
+    <form method="post" asp-controller="Home" asp-action="DeleteContact" asp-route-id="@con.Id">
+        <input type="submit" style="margin-bottom:5px" value="Удалить" class="btn btn-danger" />
+    </form>
+    <div style="border-bottom:solid 2px; border-color:darkblue"></div>
+}
+<br />
+
+<form asp-action="ContactsPage" asp-controller="Home">
+    <input type="submit" value="< Назад" class="btn btn-primary" />
+</form>

@@ -1,0 +1,52 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = @Model.siteText.MainPage_MainLinkText;
+}
+
+<div class="mainpage-pix">
+    <span>
+        @Model.siteText.MainPage_CompanyDescriptionText
+    </span>    
+</div>
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+</div>
+
+<div>
+    <h4>
+        @Model.siteText.MainPage_RequestText
+    </h4>
+</div>
+
+<form asp-action="CreateRequest" asp-controller="Home">
+    <div class="form-group">
+        <label asp-for="requestViewModel.RequesterName" class="control-label">Имя</label>
+        <input required type="text" asp-for="requestViewModel.RequesterName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="requestViewModel.RequestEmail" class="control-label">E-mail</label>
+        <input required type="text" asp-for="requestViewModel.RequestEmail" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="requestViewModel.RequestText" class="control-label">Текст сообщения</label>        
+        <textarea required type="text" asp-for="requestViewModel.RequestText" class="form-control"></textarea>
+
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Отправить" class="btn btn-primary" />
+    </div>
+</form>
+<br />
+
+@if (User.Identity.Name == "admin")
+{
+    <form asp-action="EditMainPage" asp-controller="Home">
+        <div class="form-group">
+            <input type="submit" value="Редактировать тексты страницы" class="btn btn-danger" />
+        </div>
+    </form>
+}
+

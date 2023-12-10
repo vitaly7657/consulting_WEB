@@ -1,0 +1,28 @@
+﻿@*@model m21_e2_WEB.ViewModels.RegisterViewModel*@
+@model m21_e2_WEB.Models.MainClass
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-controller="Home" asp-action="Register">
+    
+    <div style="margin:10px">
+        <label asp-for="registerViewModel.UserName"></label><br />
+        <input required asp-for="registerViewModel.UserName" />
+    </div>
+    <div style="margin:10px">
+        <label asp-for="registerViewModel.Password"></label><br />
+        <input required asp-for="registerViewModel.Password" />
+    </div>
+    <div style="margin:10px">
+        <label asp-for="registerViewModel.PasswordConfirm"></label><br />
+        <input required asp-for="registerViewModel.PasswordConfirm" />
+    </div>
+    <div style="margin:10px">
+        <input type="submit" value="Регистрация" />
+    </div>
+</form>
+<div style="margin:10px">
+    <input type="submit" onclick="history.go(-1);" value="< Назад" class="btn btn-primary" />
+</div>

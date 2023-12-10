@@ -1,0 +1,127 @@
+﻿@model m21_e2_WEB.Models.MainClass
+
+@{
+    ViewBag.Title = "Рабочий стол";
+}
+
+<div class="navigation">
+    <a method="get" asp-controller="Home" asp-action="MainPage">@Model.siteText.MainPage_MainLinkText</a>
+    ->
+    Рабочий стол
+</div>
+
+<div>
+    <h4 style="border-bottom-width:3px; border-bottom-style: solid">
+        Рабочий стол        
+    </h4>
+</div>
+
+<div>
+    сумма заявок за все время: @ViewBag.reqsAllTime
+</div>
+
+<table style="margin:20px 0 20px 0">
+    <tr>
+        <td style="padding-right:30px">
+            <form method="post" asp-controller="Home" asp-action="WorkPage">
+                <input hidden type="text" asp-for="requestPeriod.DateFrom" value="@DateTime.Now" />
+                <input hidden type="text" asp-for="requestPeriod.DateTo" value="@DateTime.Now.AddDays(1)" />
+                <input hidden type="text" asp-for="requestsList" value="@Model.requestsList" />
+                <input type="submit" value="Сегодня" class="btn btn-primary" />
+            </form>
+        </td>
+
+        <td style="padding-right:30px">
+            <form method="post" asp-controller="Home" asp-action="WorkPage">
+                <input hidden type="text" asp-for="requestPeriod.DateFrom" value="@DateTime.Now.AddDays(-1)" />
+                <input hidden type="text" asp-for="requestPeriod.DateTo" value="@DateTime.Now" />
+                <input hidden type="text" asp-for="requestsList" value="@Model.requestsList" />
+                <input type="submit" value="Вчера" class="btn btn-primary" />
+            </form>
+        </td>
+
+        <td style="padding-right:30px">
+            <form method="post" asp-controller="Home" asp-action="WorkPage">
+                <input hidden type="text" asp-for="requestPeriod.DateFrom" value="@DateTime.Now.AddDays(-7)" />
+                <input hidden type="text" asp-for="requestPeriod.DateTo" value="@DateTime.Now.AddDays(1)" />
+                <input hidden type="text" asp-for="requestsList" value="@Model.requestsList" />
+                <input type="submit" value="Неделя" class="btn btn-primary" />
+            </form>
+        </td>
+
+        <td style="padding-right:30px">
+            <form method="post" asp-controller="Home" asp-action="WorkPage">
+                <input hidden type="text" asp-for="requestPeriod.DateFrom" value="@DateTime.Now.AddDays(-31)" />
+                <input hidden type="text" asp-for="requestPeriod.DateTo" value="@DateTime.Now.AddDays(1)" />
+                <input hidden type="text" asp-for="requestsList" value="@Model.requestsList" />
+                <input type="submit" value="Месяц" class="btn btn-primary" />
+            </form>
+        </td>        
+
+        <form method="post" asp-controller="Home" asp-action="WorkPage">
+        <td style="padding-right:30px">
+            <input type="submit" value="Период" class="btn btn-primary" />
+            <input hidden type="text" asp-for="requestsList" value="@Model.requestsList" />            
+        </td>
+
+        <td>
+            <span> c </span>
+            <input type="date" asp-for="requestPeriod.DateFrom" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span> по </span>
+            <input type="date" asp-for="requestPeriod.DateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        </td>
+        </form>
+    </tr>
+</table>
+
+@if(@Model.requestPeriod != null)
+{
+    <div>
+        выбранный период: @Model.requestPeriod.DateFrom - @Model.requestPeriod.DateTo <br />
+        заявок в выбранной категории: @ViewBag.reqsPeriod <br />
+        процент от общего количества: @ViewBag.percentPeriod
+    </div>
+}
+
+<div class="workpage-requests">
+    <table class="table" style="width:100%">
+        <tr style="font-weight:bold">
+            <td style="width:10%">Номер заявки</td>
+            <td>Имя</td>
+            <td>E-mail</td>
+            <td>Текст сообщения</td>
+            <td>Время заявки</td>
+            <td style="width:10%">Статус</td>
+            <td style="width:20%">Изменить статус</td>
+        </tr>
+
+        @if (@Model.requestsList != null)
+        {
+            @foreach (Request req in Model.requestsList)
+            {
+                <form method="post" asp-controller="Home" asp-action="EditRequestStatus">
+                <tr>
+                    <td><input type="hidden" asp-for="request.Id" value="@req.Id" />@req.Id</td>
+                    <td><input type="hidden" asp-for="request.RequesterName" value="@req.RequesterName" />@req.RequesterName</td>
+                    <td><input type="hidden" asp-for="request.RequestEmail" value="@req.RequestEmail" />@req.RequestEmail</td>
+                    <td><input type="hidden" asp-for="request.RequestText" value="@req.RequestText" />@req.RequestText</td>
+                    <td><input type="hidden" asp-for="request.RequestTime" value="@req.RequestTime" />@req.RequestTime</td>
+                    <td>@req.RequestStatus</td>
+                    <td>
+                        <select asp-for="request.RequestStatus">
+                            <option value="получена">получена</option>
+                            <option value="в работе">в работе</option>
+                            <option value="выполнена">выполнена</option>
+                            <option value="отклонена">отклонена</option>
+                            <option value="отменена">отменена</option>
+                        </select>
+                        <input hidden type="text" asp-for="requestPeriod.DateFrom" value="@Model.requestPeriod.DateFrom">
+                        <input hidden type="text" asp-for="requestPeriod.DateTo" value="@Model.requestPeriod.DateTo">
+                        <input type="submit" value="Сохранить" class="btn btn-sm btn-primary" />
+                    </td>
+                </tr>
+                </form>
+            }
+        }
+    </table>
+</div>
